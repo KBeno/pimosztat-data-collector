@@ -11,8 +11,16 @@ def get_random_values():
     return {"humidity": humidity, "temperature": temperature}
 
 def get_real_value(type, pin):
-    # TODO
-    return get_random_values()
+    import Adafruit_DHT
+    sensor_args = { '11': Adafruit_DHT.DHT11,
+                '22': Adafruit_DHT.DHT22,
+                '2302': Adafruit_DHT.AM2302 }
+    sensor = sensor_args[type]
+
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    if humidity is not None and temperature is not None:
+        return {"humidity": humidity, "temperature": temperature}
+    raise Exception("Failed to read sensor")
 
 parser = OptionParser()
 parser.add_option("-f", "--file", dest="filename", help="output file name", metavar="FILE")
