@@ -22,7 +22,7 @@ parser.add_option("-d", "--demo", dest="demo", help="demo mode", default=False, 
 
 (options, args) = parser.parse_args()
 
-if not hasattr(options, "filename"):
+if not options.filename:
     parser.error("--file is mandatory")
 
 while True:
